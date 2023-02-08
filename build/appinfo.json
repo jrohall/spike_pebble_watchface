@@ -1,0 +1,36 @@
+{
+    "targetPlatforms": [
+        "aplite", 
+        "basalt", 
+        "chalk", 
+        "diorite"
+    ], 
+    "displayName": "spike_pebble_watchface", 
+    "name": "spike_pebble_watchface", 
+    "messageKeys": {
+        "dummy": 10000
+    }, 
+    "companyName": "MakeAwesomeHappen", 
+    "enableMultiJS": true, 
+    "versionLabel": "1.0", 
+    "capabilities": [], 
+    "sdkVersion": "3", 
+    "appKeys": {
+        "dummy": 10000
+    }, 
+    "longName": "spike_pebble_watchface", 
+    "shortName": "spike_pebble_watchface", 
+    "watchapp": {
+        "watchface": true
+    }, 
+    "resources": {
+        "media": [
+            {
+                "type": "bitmap", 
+                "name": "SPIKE_CHALK", 
+                "file": "images/spike_chalk.pbl.png"
+            }
+        ]
+    }, 
+    "uuid": "068f02d1-9220-4c3f-acd5-da19579da4c3"
+}

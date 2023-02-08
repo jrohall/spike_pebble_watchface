@@ -1,0 +1,35 @@
+{
+  "name": "spike_pebble_watchface",
+  "author": "MakeAwesomeHappen",
+  "version": "1.0.0",
+  "keywords": ["pebble-app"],
+  "private": true,
+  "dependencies": {},
+  "pebble": {
+    "displayName": "spike_pebble_watchface",
+    "uuid": "068f02d1-9220-4c3f-acd5-da19579da4c3",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+      "aplite",
+      "basalt",
+      "chalk",
+      "diorite"
+    ],
+    "watchapp": {
+      "watchface": true
+    },
+    "messageKeys": [
+      "dummy"
+    ],
+    "resources": {
+      "media": [
+        {
+          "type": "bitmap",
+          "name": "SPIKE_CHALK",
+          "file": "images/spike_chalk.pbl.png"
+      	}
+      ]
+    }
+  }
+}
