@@ -3,6 +3,7 @@
 Window *window;
 GBitmap *icon_bitmap;
 BitmapLayer *icon_layer;
+//InverterLayer *inverted_layer;
 TextLayer *clock_text_layer;
 char buffer[] = "00:00";
 
@@ -30,15 +31,20 @@ void window_load(Window *window){
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(icon_layer));
 
   //Setting the TextLayer
-  clock_text_layer = text_layer_create(GRect(0, 90, 180, 180));
-  text_layer_set_background_color(clock_text_layer, GColorClear);
-  text_layer_set_text_color(clock_text_layer, GColorBlack);
+  clock_text_layer = text_layer_create(GRect(0, 120, 180, 180));
+  text_layer_set_background_color(clock_text_layer, GColorBlack);
+  text_layer_set_text_color(clock_text_layer, GColorWhite);
   text_layer_set_text_alignment(clock_text_layer, GTextAlignmentCenter);
+  text_layer_set_font(clock_text_layer, fonts_get_system_font(FONT_KEY_LECO_28_LIGHT_NUMBERS));
    
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(clock_text_layer));
   //text_layer_set_text(clock_text_layer, "Whatever happens, happens.");
 
-  //Get a time structure so that the face doesn't start blank
+  /*Inverted layer, applied after layer you want inverted
+  inverted_layer = inverter_layer_create(GRect(0, 50, 180, 180));
+  layer_add_child(window_get_root_layer(window), (Layer*) inverted_layer);
+  */
+
   struct tm *t;
   time_t temp;
   temp = time(NULL);
@@ -58,6 +64,10 @@ void window_unload(Window *window){
 
   //Destroy TextLayer
   text_layer_destroy(clock_text_layer);
+
+  //Destroy InvertedLayer
+  //inverter_layer_destroy(inverted_layer);
+
 }
  
 void init()
