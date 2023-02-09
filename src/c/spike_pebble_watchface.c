@@ -4,15 +4,14 @@ Window *window;
 GBitmap *icon_bitmap;
 BitmapLayer *icon_layer;
 //Layer *date_layer;
-TextLayer *clock_text_layer, *day_text_layer, *mon_text_layer, *quote_text_layer;
+TextLayer *clock_text_layer, *day_text_layer, *date_text_layer, *mon_text_layer, *quote_text_layer;
 
-char mon_buffer[4], day_buffer[6];
+char date_buffer[4], day_buffer[6], mon_buffer[4];
 char buffer[] = "00:00";
 
 // Tick handler is set to run every minute, this is how we will change the time
 // MUST BE DECLARED BEFORE IT IS FIRST CALLED I.E. BEFORE WINDOW_LOAD
-void tick_handler(struct tm *tick_time, TimeUnits units_changed)
-{
+void tick_handler(struct tm *tick_time, TimeUnits units_changed){
   //Here we will update the watchface display
   //Format the buffer string using tick_time as the time source
   strftime(buffer, sizeof("00:00"), "%H:%M", tick_time);
@@ -21,16 +20,29 @@ void tick_handler(struct tm *tick_time, TimeUnits units_changed)
   text_layer_set_text(clock_text_layer, buffer);
 }
 
-void date_tick_handler(struct tm *tii, TimeUnits units_changed) {
+void days_tick_handler(struct tm *tii, TimeUnits units_changed){
   //Here we will be updating the watchface date display
   //Changing the TextLayer day text to show the updated day
   strftime(day_buffer, sizeof(day_buffer), "%a", tii);
   text_layer_set_text(day_text_layer, day_buffer);
 
-  //Changing the TextLayer month text to show the updated month
-  //strftime(mon_buffer, sizeof(mon_buffer), "%d", tii);
-  //text_layer_set_text(mon_text_layer, mon_buffer);
+  //Changing the TextLayer month text to show the updated day of month
+  strftime(date_buffer, sizeof(date_buffer), "%d", tii);
+  text_layer_set_text(date_text_layer, date_buffer);
 }
+
+
+void mon_tick_handler(struct tm *tii, TimeUnits units_changed){
+  //Here we will be updating the watchface date display
+  //Changing the TextLayer day text to show the updated day
+  strftime(mon_buffer, sizeof(mon_buffer), "%m", tii);
+  text_layer_set_text(mon_text_layer, mon_buffer);
+
+  //Changing the TextLayer month text to show the updated month
+  //strftime(date_buffer, sizeof(date_buffer), "%d", tii);
+  //text_layer_set_text(date_text_layer, date_buffer);
+}
+
 
 void window_load(Window *window){
   //Load bitmaps into GBitmap structures
@@ -38,7 +50,7 @@ void window_load(Window *window){
   icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_SPIKE_CHALK);
    
   //Create BitmapLayers to show GBitmaps and add to Window
-  //Sample images are 127 x 129 pixels, pebble time round is 180 x 180 pixels
+  //Pebble time round is 180 x 180 pixels
   icon_layer = bitmap_layer_create(GRect(0, 0, 180, 180));
   bitmap_layer_set_bitmap(icon_layer, icon_bitmap);
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(icon_layer));
@@ -67,16 +79,40 @@ void window_load(Window *window){
 
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(quote_text_layer));
 
+  
   //Setting the day TextLayer
-  day_text_layer = text_layer_create(GRect(0, 145, 180, 180));
+  day_text_layer = text_layer_create(GRect(70, 145, 180, 180));
   text_layer_set_text(day_text_layer, day_buffer);
   text_layer_set_background_color(day_text_layer, GColorClear);
-  text_layer_set_text_alignment(day_text_layer, GTextAlignmentCenter);
+  //text_layer_set_text_alignment(day_text_layer, GTextAlignmentCenter);
   text_layer_set_text_color(day_text_layer, GColorWhite);
   text_layer_set_font(day_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
 
-  layer_add_child(window_get_root_layer(window), text_layer_get_layer(day_text_layer));
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(day_text_layer)); 
 
+  
+  //Setting the date (number) TextLayer
+  date_text_layer = text_layer_create(GRect(95, 145, 180, 180));
+  text_layer_set_text(date_text_layer, date_buffer);
+  text_layer_set_background_color(date_text_layer, GColorClear);
+  //text_layer_set_text_alignment(date_text_layer, GTextAlignmentCenter);
+  text_layer_set_text_color(date_text_layer, GColorWhite);
+  text_layer_set_font(date_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
+
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(date_text_layer));
+
+  /*
+  //Setting the month TextLayer
+  mon_text_layer = text_layer_create(GRect(60, 145, 180, 180));
+  text_layer_set_text(mon_text_layer, date_buffer);
+  text_layer_set_background_color(mon_text_layer, GColorClear);
+  text_layer_set_text_color(mon_text_layer, GColorWhite);
+  text_layer_set_font(mon_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
+
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(mon_text_layer));
+  */
+  
+  
   //Minute Clock Time
   struct tm *t;
   time_t temp;
@@ -85,7 +121,8 @@ void window_load(Window *window){
    
   //Manually call the tick handler when the window is loading
   tick_handler(t, MINUTE_UNIT);
-  date_tick_handler(t, DAY_UNIT);
+  days_tick_handler(t, DAY_UNIT);
+  //mon_tick_handler(t, MONTH_UNIT);
 
    
 }
@@ -101,7 +138,8 @@ void window_unload(Window *window){
   text_layer_destroy(clock_text_layer);
   text_layer_destroy(quote_text_layer);
   text_layer_destroy(day_text_layer);
-  text_layer_destroy(mon_text_layer);
+  //text_layer_destroy(mon_text_layer);
+  text_layer_destroy(date_text_layer);
 
   //Destroy Layers
   //layer_destroy(date_layer);
@@ -122,11 +160,13 @@ void init()
 
   //initialize the day and month buffers
   day_buffer[0] = '\0';
-  mon_buffer[0] = '\0';
+  date_buffer[0] = '\0';
+  //mon_buffer[0] = '\0';
 
   //register the tick function
   tick_timer_service_subscribe(MINUTE_UNIT, (TickHandler) tick_handler);
-  tick_timer_service_subscribe(DAY_UNIT, (TickHandler) date_tick_handler);
+  tick_timer_service_subscribe(DAY_UNIT, (TickHandler) days_tick_handler);
+  //tick_timer_service_subscribe(MONTH_UNIT, (TickHandler) mon_tick_handler);
 }
  
 void deinit()
