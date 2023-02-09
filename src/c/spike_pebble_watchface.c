@@ -3,8 +3,7 @@
 Window *window;
 GBitmap *icon_bitmap;
 BitmapLayer *icon_layer;
-//InverterLayer *inverted_layer;
-TextLayer *clock_text_layer;
+TextLayer *clock_text_layer, *date_text_layer, *quote_text_layer;
 char buffer[] = "00:00";
 
 // Tick handler is set to run every minute, this is how we will change the time
@@ -15,7 +14,7 @@ void tick_handler(struct tm *tick_time, TimeUnits units_changed)
   //Format the buffer string using tick_time as the time source
   strftime(buffer, sizeof("00:00"), "%H:%M", tick_time);
  
-  //Change the TextLayer text to show the new time!
+  //Change the TextLayer text to show the updated time
   text_layer_set_text(clock_text_layer, buffer);
 }
 
@@ -30,7 +29,7 @@ void window_load(Window *window){
   bitmap_layer_set_bitmap(icon_layer, icon_bitmap);
   layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(icon_layer));
 
-  //Setting the TextLayer
+  //Setting the clock TextLayer
   clock_text_layer = text_layer_create(GRect(0, 120, 180, 180));
   text_layer_set_background_color(clock_text_layer, GColorBlack);
   text_layer_set_text_color(clock_text_layer, GColorWhite);
@@ -40,11 +39,17 @@ void window_load(Window *window){
   layer_add_child(window_get_root_layer(window), text_layer_get_layer(clock_text_layer));
   //text_layer_set_text(clock_text_layer, "Whatever happens, happens.");
 
-  /*Inverted layer, applied after layer you want inverted
-  inverted_layer = inverter_layer_create(GRect(0, 50, 180, 180));
-  layer_add_child(window_get_root_layer(window), (Layer*) inverted_layer);
-  */
+  //Setting the date TextLayer
+  quote_text_layer = text_layer_create(GRect(0, 105, 180, 180));
+  text_layer_set_background_color(quote_text_layer, GColorClear);
+  text_layer_set_text_color(quote_text_layer, GColorYellow);
+  text_layer_set_text_alignment(quote_text_layer, GTextAlignmentCenter);
+  text_layer_set_font(quote_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
+  text_layer_set_text(quote_text_layer, "Whatever happens, happens.");
 
+  layer_add_child(window_get_root_layer(window), text_layer_get_layer(quote_text_layer));
+
+  //Minute Clock Time
   struct tm *t;
   time_t temp;
   temp = time(NULL);
@@ -62,11 +67,9 @@ void window_unload(Window *window){
   //Destroy BitmapLayer
   bitmap_layer_destroy(icon_layer);
 
-  //Destroy TextLayer
+  //Destroy TextLayers
   text_layer_destroy(clock_text_layer);
-
-  //Destroy InvertedLayer
-  //inverter_layer_destroy(inverted_layer);
+  text_layer_destroy(quote_text_layer);
 
 }
  
