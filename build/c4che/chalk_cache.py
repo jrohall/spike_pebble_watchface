@@ -46,7 +46,7 @@ PEBBLE_SDK_ROOT = '/home/rebble/.pebble-sdk/SDKs/current/sdk-core/pebble'
 PLATFORM = {'TAGS': ['chalk', 'color', 'round', 'mic', 'strap', 'strappower', 'compass', 'health', '180w', '180h'], 'MAX_FONT_GLYPH_SIZE': 256, 'ADDITIONAL_TEXT_LINES_FOR_PEBBLE_H': [], 'MAX_APP_BINARY_SIZE': 65536, 'MAX_RESOURCES_SIZE': 1048576, 'MAX_APP_MEMORY_SIZE': 65536, 'MAX_WORKER_MEMORY_SIZE': 10240, 'NAME': 'chalk', 'BUNDLE_BIN_DIR': 'chalk', 'BUILD_DIR': 'chalk', 'MAX_RESOURCES_SIZE_APPSTORE': 262144, 'DEFINES': ['PBL_PLATFORM_CHALK', 'PBL_COLOR', 'PBL_ROUND', 'PBL_MICROPHONE', 'PBL_SMARTSTRAP', 'PBL_HEALTH', 'PBL_COMPASS', 'PBL_SMARTSTRAP_POWER', 'PBL_DISPLAY_WIDTH=180', 'PBL_DISPLAY_HEIGHT=180']}
 PLATFORM_NAME = 'chalk'
 PREFIX = '/usr/local'
-PROJECT_INFO = {'appKeys': {u'dummy': 10000}, u'watchapp': {u'watchface': True}, u'displayName': u'spike_pebble_watchface', u'uuid': u'068f02d1-9220-4c3f-acd5-da19579da4c3', u'messageKeys': {u'dummy': 10000}, 'companyName': u'MakeAwesomeHappen', u'enableMultiJS': True, u'sdkVersion': u'3', 'versionLabel': u'1.0', u'targetPlatforms': [u'aplite', u'basalt', u'chalk', u'diorite'], 'longName': u'spike_pebble_watchface', 'shortName': u'spike_pebble_watchface', u'resources': {u'media': [{u'type': u'bitmap', u'name': u'SPIKE_CHALK', u'file': u'images/spike_chalk.pbl.png'}]}, 'name': u'spike_pebble_watchface'}
+PROJECT_INFO = {'appKeys': {u'dummy': 10000}, u'watchapp': {u'watchface': True}, u'displayName': u'spike_pebble_watchface', u'uuid': u'068f02d1-9220-4c3f-acd5-da19579da4c3', u'messageKeys': {u'dummy': 10000}, 'companyName': u'jrohall', u'enableMultiJS': True, u'sdkVersion': u'3', 'versionLabel': u'1.1', u'targetPlatforms': [u'aplite', u'basalt', u'chalk', u'diorite'], 'longName': u'spike_pebble_watchface', 'shortName': u'spike_pebble_watchface', u'resources': {u'media': [{u'type': u'bitmap', u'name': u'SPIKE_CHALK', u'file': u'images/spike_chalk.pbl.png'}]}, 'name': u'spike_pebble_watchface'}
 REQUESTED_PLATFORMS = [u'aplite', u'basalt', u'chalk', u'diorite']
 RESOURCES_JSON = [{u'type': u'bitmap', u'name': u'SPIKE_CHALK', u'file': u'images/spike_chalk.pbl.png'}]
 RPATH_ST = '-Wl,-rpath,%s'
@@ -61,7 +61,7 @@ STLIB_MARKER = None
 STLIB_ST = '-l%s'
 SUPPORTED_PLATFORMS = ['basalt', 'aplite', 'emery', 'diorite', 'chalk']
 TARGET_PLATFORMS = ['diorite', 'chalk', 'basalt', 'aplite']
-TIMESTAMP = 1676215920
+TIMESTAMP = 1676216003
 USE_GROUPS = True
 VERBOSE = 0
 WEBPACK = '/home/rebble/.pebble-sdk/SDKs/current/node_modules/.bin/webpack'

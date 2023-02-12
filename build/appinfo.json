@@ -10,9 +10,9 @@
     "messageKeys": {
         "dummy": 10000
     }, 
-    "companyName": "MakeAwesomeHappen", 
+    "companyName": "jrohall", 
     "enableMultiJS": true, 
-    "versionLabel": "1.0", 
+    "versionLabel": "1.1", 
     "capabilities": [], 
     "sdkVersion": "3", 
     "appKeys": {
